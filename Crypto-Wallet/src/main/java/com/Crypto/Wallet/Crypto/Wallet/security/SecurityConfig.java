@@ -70,11 +70,40 @@ public class SecurityConfig {
 		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 		//http.authorizeRequests().anyRequest().permitAll();
 		http.authorizeRequests()
-        .antMatchers("/auth/login").permitAll()
+       // .antMatchers("/auth/login").permitAll()
         .antMatchers("/getTokens").permitAll()
-        .antMatchers("/signup").permitAll()
-        .antMatchers("/recover-password").permitAll()
-        .anyRequest().authenticated();
+       // .antMatchers("/signup").permitAll()
+        .antMatchers("/signupPage").permitAll()
+        .antMatchers("/forgotPasswordPage").permitAll()
+        .antMatchers("/pricePage").permitAll()
+        .antMatchers("/appPage").permitAll()
+        .antMatchers("/aboutPage").permitAll()
+        .antMatchers("/teamPage").permitAll()
+        .antMatchers("/blogPage").permitAll()
+        .antMatchers("/careerPage").permitAll()
+        .antMatchers("/helpDeskPage").permitAll()
+        .antMatchers("/contactPage").permitAll()
+        .antMatchers("/privacyPage").permitAll()
+        .antMatchers("/faqPage").permitAll()
+        .antMatchers("/**/*.*").permitAll()
+        .antMatchers("/loginPage").permitAll()
+        .antMatchers("/homePage").permitAll()
+        .and()
+        .formLogin()
+        .loginPage("/loginPage")
+        .usernameParameter("email")
+        .loginProcessingUrl("/auth/login")
+        .defaultSuccessUrl("/dashboard")
+        .permitAll()
+	    .and()
+	    .logout()
+	    .logoutUrl("/logout")
+	    .logoutSuccessUrl("/loginPage");
+		
+		
+		
+        //.antMatchers("/recover-password").permitAll()
+        //.anyRequest().authenticated();
 		http.exceptionHandling()
         .authenticationEntryPoint(
             (request, response, ex) -> {
@@ -84,6 +113,7 @@ public class SecurityConfig {
                 );
             }
     );
+		
 
 http.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
 		return http.build();

@@ -25,13 +25,15 @@ public class UserCrypto {
 	@GenericGenerator(name = "native",strategy = "native")
 	private int id;
 	@ManyToOne
-    @JoinColumn(name="crypto_id", nullable=false)
+    @JoinColumn(name="crypto_id")
 	private Crypto crypto;
 	
 	private double currentBalance;
 	@ManyToOne
-	@JoinColumn(name="user_id", nullable=false)
+	@JoinColumn(name="user_id")
 	private User user;
+	
+	
 	
 
 }

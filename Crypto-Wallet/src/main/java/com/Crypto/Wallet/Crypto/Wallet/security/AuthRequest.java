@@ -27,5 +27,7 @@ public class AuthRequest {
     private String password;
     
     private String confirmPassword;
+    
+    private String fullName;
 
 }

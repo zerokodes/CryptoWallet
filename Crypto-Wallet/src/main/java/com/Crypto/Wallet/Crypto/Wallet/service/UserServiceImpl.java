@@ -50,7 +50,7 @@ public class UserServiceImpl implements UserService{
     /**
      * This method is use to register a user to the database
      */
-	@Override
+	/**@Override
 	public ResponseEntity<?> signup(AuthRequest request) throws IOException {
 		User checkForUser = userRepo.findByEmail(request.getEmail());
 		if(checkForUser != null) {
@@ -61,13 +61,16 @@ public class UserServiceImpl implements UserService{
 			log.info("Password mismatch");
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
     	}
+		//User checkForUser = userRepo.findByEmail(request.getEmail());
 		User user = new User();
+		user.setEmail(request.getEmail());
     	user.setPassword(passwordEncoder.encode(request.getPassword()));
     	user.setRole(Role.USER);
     	user.setKeyPhrase(generateSecretePhrase(12));
     	userRepo.save(user);
 		return ResponseEntity.ok().build();
-	}
+	}**/
+
 
     /**
      * This method is use to authorize and authenticate user before login 
@@ -149,6 +152,38 @@ public class UserServiceImpl implements UserService{
 		     return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
 		}
 		
+	}
+
+	@Override
+	public void save(User user) throws IOException {
+		
+		
+		user.setPassword(passwordEncoder.encode(user.getPassword()));
+		user.setRole(Role.USER);
+    	user.setKeyPhrase(generateSecretePhrase(12));
+		userRepo.save(user);
+		
+	}
+
+	@Override
+	public void signup(User request) throws IOException {
+		User checkForUser = userRepo.findByEmail(request.getEmail());
+		if(checkForUser != null) {
+			log.info("This email has been used");
+			//return ResponseEntity.status(HttpStatus.NOT_ACCEPTABLE).build();
+		}
+		//if(!request.getPassword().matches(request.getConfirmPassword())) {
+			log.info("Password mismatch");
+           // return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+    	//}
+		//User checkForUser = userRepo.findByEmail(request.getEmail());
+		//User user = new User();
+		//user.setEmail(request.getEmail());
+    	//user.setPassword(passwordEncoder.encode(request.getPassword()));
+    	//user.setRole(Role.USER);
+    	//user.setKeyPhrase(generateSecretePhrase(12));
+    	userRepo.save(request);
+		//return ResponseEntity.ok().build();
 	}
 
 

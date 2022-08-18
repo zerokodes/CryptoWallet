@@ -1,8 +1,10 @@
 package com.Crypto.Wallet.Crypto.Wallet.entity;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -37,9 +39,10 @@ public class User{
 	@GenericGenerator(name = "native",strategy = "native")
 	private int id;
 	
-	
+	@Column(name="_email")
 	private String email;
 	
+	@Column(name="_Password")
 	private String password;
 	
 	private String walletAddress;
@@ -52,8 +55,27 @@ public class User{
 	
 	private String[] keyPhrase;
 	
+	private String fullName;
+	
+	private String currentAddress;
+	
+	private String permanentAddress;
+	
+	private String city;
+	
+	private String postalCode;
+	
+	private String country;
+	
+	private Date dateOfBirth;
+	
+	private Date joinDate;
+	
+	
 	@OneToOne(mappedBy = "user", cascade = CascadeType.MERGE, orphanRemoval = true, fetch = FetchType.LAZY)
 	private IdentityVerification identity;
+
+	
 
 	
 	
